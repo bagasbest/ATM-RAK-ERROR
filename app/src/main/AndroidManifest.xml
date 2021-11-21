@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MFAREK">
         <activity
+            android:name=".transfer.TransferActivity"
+            android:exported="false" />
+        <activity
+            android:name=".tarik_tunai.WithdrawActivity"
+            android:exported="false" />
+        <activity
             android:name=".homepage.HomeActivity"
             android:exported="false" />
         <activity

@@ -1,4 +1,43 @@
 <resources>
     <string name="app_name">M-FAREK</string>
     <string name="image">image</string>
+
+    <string-array name="bank">
+        <item>BANK RAKYAT INDONESIA (BRI)</item>
+        <item>BANK MANDIRI</item>
+        <item>BANK NEGARA INDONESIA (BNI)</item>
+        <item>BANK TABUNGAN NEGARA (BTN)</item>
+        <item>BANK CENTRAL ASIA (BCA)</item>
+        <item>BANK DANAMON INDONESIA</item>
+        <item>BANK PERMATA</item>
+        <item>BANK MAYBANK  INDONESIA</item>
+        <item>PAN INDONESIA BANK</item>
+        <item>BANK CIMB NIAGA</item>
+        <item>BANK OCBC NISP</item>
+        <item>BANK ARTHA GRAHA INTERNASIONAL</item>
+        <item>BANK BUMI ARTA</item>
+        <item>BANK HSBC INDONESIA</item>
+        <item>BANK JTRUST INDONESIA</item>
+        <item>BANK MAYAPADA INTERNATIONAL</item>
+        <item>BANK OF INDIA INDONESIA</item>
+        <item>BANK MUAMALAT INDONESIA</item>
+        <item>BANK MESTIKA DHARMA</item>
+        <item>BANK SHINHAN INDONESIA</item>
+        <item>BANK SINARMAS</item>
+        <item>BANK MASPION INDONESIA</item>
+        <item>BANK GANESHA</item>
+        <item>BANK ICBC INDONESIA</item>
+        <item>BANK WOORI SAUDARA INDONESIA</item>
+        <item>BANK MEGA</item>
+        <item>BANK SYARIAH INDONESIA</item>
+        <item>BANK KEB HANA INDONESIA</item>
+        <item>BANK MNC INTERNASIONAL</item>
+        <item>BANK KB BUKOPIN</item>
+        <item>BANK RAYA INDONESIA</item>
+        <item>BANK SBI INDONESIA</item>
+        <item>BANK MEGA SYARIAH</item>
+        <item>BANK INDEX SELINDO</item>
+        <item>BANK BTPN</item>
+    </string-array>
+
 </resources>

@@ -10,6 +10,8 @@ import android.view.View;
 import com.application.m_farek.R;
 import com.application.m_farek.databinding.ActivityHomeBinding;
 import com.application.m_farek.login.LoginActivity;
+import com.application.m_farek.tarik_tunai.WithdrawActivity;
+import com.application.m_farek.transfer.TransferActivity;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +33,21 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 showConfirmationDialog();
+            }
+        });
+
+        binding.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this, WithdrawActivity.class));
+            }
+        });
+
+
+        binding.cardView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this, TransferActivity.class));
             }
         });
         

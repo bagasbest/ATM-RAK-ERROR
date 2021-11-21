@@ -91,7 +91,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void saveUserDataToDatabase(String name, String email, String password, String pin) {
-        String uid = String.valueOf(System.currentTimeMillis());
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
 
         ///generate nomor rekening: 16 digit
         long smallest = 1000_0000_0000_0000L; /// minimum 16 digit
