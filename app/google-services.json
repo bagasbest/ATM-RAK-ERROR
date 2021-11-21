@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "713645888282",
+    "project_id": "m-farek",
+    "storage_bucket": "m-farek.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:713645888282:android:d765d8826fa161876752a3",
+        "android_client_info": {
+          "package_name": "com.application.m_farek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "713645888282-d99j6s46gt4tvv1pgr9qgtsd58ebui36.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSqEC4Tbw0ykTuTiPhLzs0Hq_AdiMsEeE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "713645888282-d99j6s46gt4tvv1pgr9qgtsd58ebui36.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
