@@ -21,13 +21,13 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        /// menampilkan logo pada halaman splash screen
         Glide.with(this)
                 .load(R.drawable.logo)
-                .into(
-                        binding.logo
-                );
+                .into(binding.logo);
 
 
+        //// fungsi untuk memberikan delay pada halaman splash screen selama 4 detik sebelum masuk ke menu utama / login
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /// HAPUSKAN ACTIVITY KETIKA SUDAH TIDAK DIGUNAKAN, AGAR MENGURANGI RISIKO MEMORY LEAKS
     @Override
     protected void onDestroy() {
         super.onDestroy();

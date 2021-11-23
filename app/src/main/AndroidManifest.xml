@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MFAREK">
         <activity
+            android:name=".riwayat_transaksi.data.TransactionDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".riwayat_transaksi.TransactionActivity"
+            android:exported="false" />
+        <activity
             android:name=".transfer.TransferActivity"
             android:exported="false" />
         <activity

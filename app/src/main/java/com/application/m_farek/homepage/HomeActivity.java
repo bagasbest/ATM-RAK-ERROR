@@ -10,6 +10,7 @@ import android.view.View;
 import com.application.m_farek.R;
 import com.application.m_farek.databinding.ActivityHomeBinding;
 import com.application.m_farek.login.LoginActivity;
+import com.application.m_farek.riwayat_transaksi.TransactionActivity;
 import com.application.m_farek.tarik_tunai.WithdrawActivity;
 import com.application.m_farek.transfer.TransferActivity;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
@@ -28,7 +29,8 @@ public class HomeActivity extends AppCompatActivity {
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         showOnboardingImage();
-        
+
+        /// user klik tombol logout
         binding.logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -36,6 +38,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        /// user klik menu tarik tunai
         binding.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,25 +47,35 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
+        /// user klik menu transfer
         binding.cardView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(HomeActivity.this, TransferActivity.class));
             }
         });
+
+        /// user klik menu riwayat transaksi
+        binding.cardView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this, TransactionActivity.class));
+            }
+        });
         
     }
 
+    /// ketika user klik logout, muncul box dialog yang menyatakan konfirmasi user sebelum logout apakah yakin ? atau tidak
     private void showConfirmationDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("Konfirmasi Logout")
                 .setMessage("Apakah anda yakin ingin keluar apliaksi ?")
                 .setIcon(R.drawable.ic_baseline_warning_24)
                 .setPositiveButton("YA", (dialogInterface, i) -> {
-                    // sign out dari firebase autentikasi
+                    // jika yakin logout, sign out dari firebase autentikasi
                     FirebaseAuth.getInstance().signOut();
 
-                    // go to login activity
+                    // dan go to login activity
                     Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     dialogInterface.dismiss();
@@ -70,16 +83,16 @@ public class HomeActivity extends AppCompatActivity {
                     finish();
                 })
                 .setNegativeButton("TIDAK", (dialog, i) -> {
+                    /// jika tidak, maka tetap di halaman homepage
                     dialog.dismiss();
                 })
                 .show();
     }
 
 
-    /// onboarding merupakan gambar gambar yang otomatis slide pada halaman utama
+    /// onboarding merupakan gambar-gambar yang otomatis slide pada halaman utama
     private void showOnboardingImage() {
         final ArrayList<SlideModel> imageList = new ArrayList<>();// Create image list
-
 
         imageList.add(new SlideModel(R.drawable.img1, ScaleTypes.CENTER_CROP));
         imageList.add(new SlideModel(R.drawable.img2, ScaleTypes.CENTER_CROP));
@@ -89,7 +102,7 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-
+    /// HAPUSKAN ACTIVITY KETIKA SUDAH TIDAK DIGUNAKAN, AGAR MENGURANGI RISIKO MEMORY LEAKS
     @Override
     protected void onDestroy() {
         super.onDestroy();

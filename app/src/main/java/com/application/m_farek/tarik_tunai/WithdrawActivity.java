@@ -156,8 +156,10 @@ public class WithdrawActivity extends AppCompatActivity {
                 pb.setVisibility(View.VISIBLE);
                 String transactionId = "INV-" + System.currentTimeMillis();
 
-                SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+                SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy, HH:mm:ss", Locale.getDefault());
                 String formattedDate = df.format(new Date());
+
+                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
                 Map<String, Object> withdraw = new HashMap<>();
@@ -165,6 +167,7 @@ public class WithdrawActivity extends AppCompatActivity {
                 withdraw.put("date", formattedDate);
                 withdraw.put("rekening", rekening);
                 withdraw.put("name", name);
+                withdraw.put("uid", uid);
                 withdraw.put("nominal", nominal);
 
 

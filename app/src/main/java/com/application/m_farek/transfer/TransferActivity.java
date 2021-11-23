@@ -108,8 +108,10 @@ public class TransferActivity extends AppCompatActivity {
         transferMoney = Long.parseLong(nominal);
         String transactionId = "INV-" + System.currentTimeMillis();
 
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy, HH:mm:ss", Locale.getDefault());
         String formattedDate = df.format(new Date());
+
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
         Map<String, Object> transfer = new HashMap<>();
@@ -120,6 +122,7 @@ public class TransferActivity extends AppCompatActivity {
         transfer.put("userRekening", userRekening);
         transfer.put("bank", bank);
         transfer.put("nominal", transferMoney);
+        transfer.put("uid", uid);
 
 
         /// membuat catatan transaksi, supaya riwayat penarikan tunai tersimpan

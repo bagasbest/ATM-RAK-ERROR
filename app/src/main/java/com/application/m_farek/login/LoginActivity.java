@@ -28,13 +28,16 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        /// jalankan fungsi auto login jika user sebelumnya pernah login
+        /// jalankan fungsi auto login jika user sebelumnya pernah login agar masuk ke homepage tanpa perlu login
         autoLogin();
 
+
+        /// menampilkan logo pada halaman splash screen
         Glide.with(this)
                 .load(R.drawable.logo)
                 .into(binding.logo);
 
+        /// klik tombol login
         binding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        /// klik tulisan "Buka rekening"
         binding.register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,12 +54,15 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /// fungsi auto-login, jika sudah login sebelumnya maka langsung ke homepage tanpa perlu login lagi
     private void autoLogin() {
         if(FirebaseAuth.getInstance().getCurrentUser() != null) {
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
         }
     }
 
+
+    /// sebelum login, sistem perlu mendeteksi tiap kolom email dan password, dan memastikan kolom tersebut terisi
     private void formValidation() {
         String email = binding.email.getText().toString().trim();
         String password = binding.password.getText().toString().trim();
@@ -68,7 +75,11 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        /// tampilkan loading bar ketika klik login
         binding.progressBar.setVisibility(View.VISIBLE);
+
+
+        /// fungsi untuk mengecek, apakah email yang di inputkan ketika login sudah terdaftar di database atau belum
         FirebaseAuth
                 .getInstance()
                 .signInWithEmailAndPassword(email, password)
@@ -76,9 +87,11 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
+                            /// jika terdapat di database dan email serta password sama, maka masuk ke homepage
                             binding.progressBar.setVisibility(View.GONE);
                             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                         } else {
+                            /// jika tidak terdapat di database dan email serta password, maka tidak bisa login
                             binding.progressBar.setVisibility(View.GONE);
                             showFailureDialog();
                         }
@@ -98,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                 .show();
     }
 
-
+    /// HAPUSKAN ACTIVITY KETIKA SUDAH TIDAK DIGUNAKAN, AGAR MENGURANGI RISIKO MEMORY LEAKS
     @Override
     protected void onDestroy() {
         super.onDestroy();

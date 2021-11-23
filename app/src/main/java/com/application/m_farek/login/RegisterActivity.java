@@ -31,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
+        /// kembali ke halaman login
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,6 +40,8 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
 
+
+        /// klik registrasi / buka rekening
         binding.registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    /// sebelum buka rekening, sistem perlu mendeteksi tiap kolom inputan: name, email, password, dan pin, memastikan kolom tersebut terisi
     private void formValidation() {
         String name = binding.name.getText().toString().trim();
         String email = binding.email.getText().toString().trim();
@@ -70,7 +74,10 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        /// tampilkan loading bar ketika klik login
         binding.progressBar.setVisibility(View.VISIBLE);
+
+        /// fungsi untuk membuat akun baru / buka rekening baru
         FirebaseAuth
                 .getInstance()
                 .createUserWithEmailAndPassword(email, password)
@@ -78,8 +85,10 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
+                            /// jika sukses, maka data inputan akan di simpan kedalam database
                             saveUserDataToDatabase(name, email, password, pin);
                         } else {
+                            /// jika gagal, maka muncul box dialog gagal
                             binding.progressBar.setVisibility(View.GONE);
                             showFailureDialog();
                         }
@@ -90,7 +99,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+
+    /// fungsi untuk menyimpan data inputan ke dalam database
     private void saveUserDataToDatabase(String name, String email, String password, String pin) {
+        /// generate unik ID user
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
@@ -101,6 +113,7 @@ public class RegisterActivity extends AppCompatActivity {
         long rekeningNumber = ThreadLocalRandom.current().nextLong(smallest, biggest+1);
 
 
+        /// simpan data menggunakan Hash - map
         Map<String, Object> user = new HashMap<>();
         user.put("name", name);
         user.put("email", email);
@@ -109,6 +122,8 @@ public class RegisterActivity extends AppCompatActivity {
         user.put("uid", uid);
         user.put("rekening", rekeningNumber);
 
+
+        /// simpan hash map kedalam database, collection users
         FirebaseFirestore
                 .getInstance()
                 .collection("users")
@@ -118,9 +133,11 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()) {
+                            /// jika sukses, maka akan muncul dialog box sukses
                             binding.progressBar.setVisibility(View.GONE);
                             showSuccessDialog();
                         } else {
+                            /// jika gagal, maka akan muncul dialog boc gagal
                             binding.progressBar.setVisibility(View.GONE);
                             showFailureDialog();
                         }
