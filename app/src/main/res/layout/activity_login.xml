@@ -58,13 +58,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:startIconDrawable="@drawable/ic_baseline_alternate_email_24">
+            app:startIconDrawable="@drawable/ic_baseline_person_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/email"
+                android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
+                android:hint="Username"
                 android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -111,26 +111,39 @@
             android:layout_height="60dp"
             android:layout_marginStart="16sp"
             android:layout_marginTop="16sp"
-            android:layout_marginEnd="16sp"
+            android:layout_marginEnd="90dp"
             android:text="Login"
+            android:textStyle="bold"
             android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/progressBar" />
 
 
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="16sp"
+            android:backgroundTint="@color/background"
+            android:contentDescription="@string/image"
+            android:src="@drawable/ic_baseline_fingerprint_24"
+            app:layout_constraintBottom_toBottomOf="@+id/loginBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/loginBtn" />
+
         <TextView
             android:id="@+id/register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16sp"
+            android:layout_marginBottom="30dp"
             android:padding="10dp"
             android:text="Buka Rekening"
             android:textColor="@color/background"
             android:textStyle="bold"
-            android:layout_marginBottom="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/loginBtn"
+            app:layout_constraintEnd_toEndOf="@+id/imageButton"
             app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
 
 

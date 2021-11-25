@@ -56,16 +56,201 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:text="Saldo Rekening Utama"
+                android:textColor="@color/background"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:text="Rp. -"
+                android:textSize="16sp"
+                android:textColor="@color/background"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+
+            <TextView
+                android:id="@+id/balanceHidden"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:text="Rp. \u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"
+                android:textSize="16sp"
+                android:visibility="gone"
+                android:textColor="@color/background"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+
+            <ImageView
+                android:id="@+id/visibleOn"
+                android:layout_width="25dp"
+                android:layout_height="25sp"
+                android:layout_marginStart="16sp"
+                android:contentDescription="@string/image"
+                android:src="@drawable/ic_baseline_visibility_24"
+                app:layout_constraintBottom_toBottomOf="@+id/balance"
+                app:layout_constraintEnd_toEndOf="@+id/textView9"
+                app:layout_constraintTop_toBottomOf="@+id/textView9"
+                app:layout_constraintVertical_bias="0.0"
+                app:tint="@color/background" />
+
+            <ImageView
+                android:id="@+id/visibleOff"
+                android:layout_width="25dp"
+                android:layout_height="25sp"
+                android:layout_marginStart="16sp"
+                android:contentDescription="@string/image"
+                android:src="@drawable/ic_baseline_visibility_off_24"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/balance"
+                app:layout_constraintEnd_toEndOf="@+id/textView9"
+                app:layout_constraintTop_toTopOf="@+id/balance"
+                app:tint="@color/background" />
+
+
+            <View
+                android:id="@+id/view6"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="16sp"
+                android:background="@drawable/bg_rounded"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/balance" />
+
+
+            <com.ekn.gruzer.gaugelibrary.FullGauge
+                android:id="@+id/balanceGauge"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginStart="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/view6"
+                app:layout_constraintStart_toStartOf="@+id/view6"
+                app:layout_constraintTop_toTopOf="@+id/view6" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@color/background"
+                app:layout_constraintBottom_toBottomOf="@+id/balanceGauge"
+                app:layout_constraintEnd_toEndOf="@+id/balanceGauge"
+                app:layout_constraintStart_toStartOf="@+id/balanceGauge"
+                app:layout_constraintTop_toTopOf="@+id/balanceGauge">
+
+                <TextView
+                    android:id="@+id/percentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 %"
+                    android:textColor="@color/white"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pengeluaran"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="28sp"
+                android:text="Total Pemasukan"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@+id/balanceGauge"
+                app:layout_constraintTop_toTopOf="@+id/view6" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp. 100.000.000"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/textView10"
+                app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:text="Total Pengeluaran"
+                android:layout_marginTop="16sp"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@+id/balanceGauge"
+                app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+            <TextView
+                android:id="@+id/pengeluaran"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp. -"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/textView10"
+                app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="16sp"
+                android:text="Selisih"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@+id/balanceGauge"
+                app:layout_constraintTop_toBottomOf="@+id/pengeluaran" />
+
+            <TextView
+                android:id="@+id/selisih"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp. -"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/textView10"
+                app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:layout_marginStart="30dp"
                 android:elevation="10dp"
+                android:layout_marginTop="30dp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/view6">
 
                 <ImageView
                     android:layout_width="40dp"
@@ -94,10 +279,11 @@
                 android:layout_height="90dp"
                 android:elevation="10dp"
                 app:cardCornerRadius="15dp"
+                android:layout_marginTop="30dp"
                 app:cardElevation="10dp"
                 app:layout_constraintEnd_toStartOf="@+id/cardView3"
                 app:layout_constraintStart_toEndOf="@+id/cardView"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/view6">
 
                 <ImageView
                     android:layout_width="40dp"
@@ -126,10 +312,11 @@
                 android:layout_height="90dp"
                 android:layout_marginEnd="30dp"
                 android:elevation="10dp"
+                android:layout_marginTop="30dp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/view6">
 
                 <ImageView
                     android:layout_width="40dp"

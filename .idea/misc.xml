@@ -6,15 +6,20 @@
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/drawable/bg_border.xml" value="0.2526041666666667" />
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/drawable/bg_rounded.xml" value="0.21481481481481482" />
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_home.xml" value="0.264" />
-        <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_login.xml" value="0.264" />
+        <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_main.xml" value="0.176" />
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_register.xml" value="0.264" />
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_transaction.xml" value="0.2" />
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_transaction_detail.xml" value="0.264" />
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_transfer.xml" value="0.264" />
+        <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_transfer_new_user.xml" value="0.264" />
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_withdraw.xml" value="0.2" />
+        <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_withdraw_confirmation.xml" value="0.264" />
+        <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_withdraw_result.xml" value="0.264" />
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/fragment_transfer.xml" value="0.11322188449848024" />
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/fragment_withdraw.xml" value="0.11322188449848024" />
+        <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/item_last_transfer.xml" value="0.536" />
+        <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/item_list_transfer.xml" value="0.2" />
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/item_transaction.xml" value="0.264" />
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/popup_pin.xml" value="0.264" />
       </map>

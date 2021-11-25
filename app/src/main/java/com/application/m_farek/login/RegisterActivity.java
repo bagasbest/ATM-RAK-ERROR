@@ -59,6 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
         String email = binding.email.getText().toString().trim();
         String password = binding.password.getText().toString().trim();
         String pin = binding.pin.getText().toString().trim();
+        String username = binding.username.getText().toString().trim();
 
         if(name.isEmpty()) {
             Toast.makeText(RegisterActivity.this, "Nama Lengkap tidak boleh kosong!", Toast.LENGTH_SHORT).show();
@@ -71,6 +72,9 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }  else if (pin.isEmpty()) {
             Toast.makeText(RegisterActivity.this, "PIN tidak boleh kosong!", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (username.isEmpty()) {
+            Toast.makeText(RegisterActivity.this, "Username tidak boleh kosong!", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -86,7 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
                             /// jika sukses, maka data inputan akan di simpan kedalam database
-                            saveUserDataToDatabase(name, email, password, pin);
+                            saveUserDataToDatabase(name, email, password, pin, username);
                         } else {
                             /// jika gagal, maka muncul box dialog gagal
                             binding.progressBar.setVisibility(View.GONE);
@@ -101,7 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     /// fungsi untuk menyimpan data inputan ke dalam database
-    private void saveUserDataToDatabase(String name, String email, String password, String pin) {
+    private void saveUserDataToDatabase(String name, String email, String password, String pin, String username) {
         /// generate unik ID user
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -120,7 +124,11 @@ public class RegisterActivity extends AppCompatActivity {
         user.put("password", password);
         user.put("pin", pin);
         user.put("uid", uid);
+        user.put("username", username);
+        user.put("balance", 100000000);
+        user.put("pengeluaran", 0);
         user.put("rekening", rekeningNumber);
+        user.put("isUserBlocked", false);
 
 
         /// simpan hash map kedalam database, collection users

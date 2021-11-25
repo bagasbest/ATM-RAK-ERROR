@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".tarik_tunai.WithdrawActivity">
+    tools:context=".tarik_tunai.WithdrawConfirmationActivity">
+
 
     <View
         android:id="@+id/view2"
@@ -31,7 +32,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TARIK TUNAI"
+        android:text="Konfirmasi"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -44,11 +45,11 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="16sp"
         android:layout_marginTop="16sp"
         android:layout_marginEnd="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/confirm"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view2">
 
@@ -92,151 +93,144 @@
 
 
             <TextView
-                android:id="@+id/rekening"
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="-"
                 android:layout_marginStart="16sp"
+                android:text="-"
                 android:textColor="@color/background"
                 app:layout_constraintStart_toEndOf="@+id/imageView2"
                 app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
 
             <TextView
-                android:id="@+id/balance"
+                android:id="@+id/rekening"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16sp"
-                android:text="Rp. -"
+                android:text="-"
                 android:textColor="@color/background"
                 app:layout_constraintStart_toEndOf="@+id/imageView2"
-                app:layout_constraintTop_toBottomOf="@+id/rekening" />
-
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nominal"
-                android:textColor="@color/background"
-                android:layout_marginTop="16sp"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view7" />
-
-            <Button
-                android:id="@+id/num1"
-                android:layout_width="150dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="16sp"
-                android:textAllCaps="false"
-                android:text="Rp100.000"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-            <Button
-                android:id="@+id/num2"
-                android:layout_width="150dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="16sp"
-                android:text="Rp200.000"
-                android:textAllCaps="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-            <Button
-                android:id="@+id/num3"
-                android:layout_width="150dp"
-                android:layout_height="60dp"
-                android:text="Rp300.000"
-                android:textAllCaps="false"
-                android:layout_marginTop="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/num1" />
-
-            <Button
-                android:id="@+id/num4"
-                android:layout_width="150dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="16sp"
-                android:text="Rp400.000"
-                android:textAllCaps="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/num2" />
-
-
-            <Button
-                android:id="@+id/num5"
-                android:layout_width="150dp"
-                android:layout_height="60dp"
-                android:text="Rp500.000"
-                android:textAllCaps="false"
-                android:layout_marginTop="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/num3" />
-
-            <Button
-                android:id="@+id/num6"
-                android:layout_width="150dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="16sp"
-                android:text="Rp600.000"
-                android:textAllCaps="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/num4" />
-
-
-            <Button
-                android:id="@+id/num7"
-                android:layout_width="150dp"
-                android:layout_height="60dp"
-                android:text="Rp700.000"
-                android:textAllCaps="false"
-                android:layout_marginTop="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/num5" />
-
-            <Button
-                android:id="@+id/num8"
-                android:layout_width="150dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="16sp"
-                android:text="Rp800.000"
-                android:textAllCaps="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/num6" />
-
-            <Button
-                android:id="@+id/num9"
-                android:layout_width="150dp"
-                android:layout_height="60dp"
-                android:text="900.000"
-                android:textAllCaps="false"
-                android:layout_marginTop="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/num7" />
-
-            <Button
-                android:id="@+id/num10"
-                android:layout_width="150dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="16sp"
-                android:text="Rp1.000.000"
-                android:textAllCaps="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/num8" />
+                app:layout_constraintTop_toBottomOf="@+id/name" />
 
             <View
-                android:id="@+id/view4"
+                android:id="@+id/view8"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="16sp"
                 android:background="@color/background"
-                app:layout_constraintTop_toBottomOf="@+id/num9"
+                app:layout_constraintTop_toBottomOf="@id/view7"
                 tools:layout_editor_absoluteX="0dp" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16sp"
+                android:textStyle="bold"
+                android:text="Detail"
+                android:textColor="@color/background"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view8" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16sp"
+                android:text="Nominal"
+                android:textColor="@color/background"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16sp"
+                android:text="Biaya Admin"
+                android:textColor="@color/background"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total"
+                android:textStyle="bold"
+                android:textColor="@color/background"
+                android:layout_marginTop="16sp"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view9" />
+
+            <TextView
+                android:id="@+id/nominal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp0"
+                android:textColor="@color/background"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+
+            <TextView
+                android:id="@+id/biayaAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp0"
+                android:textColor="@color/background"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nominal" />
+
+
+            <View
+                android:id="@+id/view9"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16sp"
+                android:background="@color/background"
+                app:layout_constraintTop_toBottomOf="@+id/textView16"
+                tools:layout_editor_absoluteX="0dp" />
+
+
+            <TextView
+                android:id="@+id/total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp0"
+                android:textColor="@color/background"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view9" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+    <Button
+        android:id="@+id/confirm"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Konfirmasi"
+        android:layout_marginBottom="16sp"
+        android:layout_marginStart="16sp"
+        android:layout_marginEnd="16sp"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,6 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MFAREK">
         <activity
+            android:name=".transfer.tambah_daftar_baru.TransferNewUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".tarik_tunai.WithdrawResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".tarik_tunai.WithdrawConfirmationActivity"
+            android:exported="false" />
+        <activity
             android:name=".riwayat_transaksi.data.TransactionDetailActivity"
             android:exported="false" />
         <activity

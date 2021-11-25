@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import com.application.m_farek.R;
 import com.application.m_farek.databinding.ActivityWithdrawBinding;
+import com.application.m_farek.homepage.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -35,22 +38,24 @@ import java.util.Map;
 public class WithdrawActivity extends AppCompatActivity {
 
 
+    public static final String EXTRA_USER = "users";
     private ActivityWithdrawBinding binding;
-    private FirebaseUser user;
-    private String pin;
-    private String name;
-    private String rekening;
     private long nominal;
+    private UserModel model;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityWithdrawBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        user = FirebaseAuth.getInstance().getCurrentUser();
 
-        /// ambil pin nasabah, ini digunakan sebagai validator ketika nasabah memasukkan pin, jika pin sama, maka nasabah dapat menarik uang
-        getPin();
+        NumberFormat formatter = new DecimalFormat("#,###");
+
+
+        model = getIntent().getParcelableExtra(EXTRA_USER);
+        binding.rekening.setText("No.Rekening: " + (model.getRekening()));
+        binding.balance.setText("Sumber Dana: Rp. " + formatter.format(model.getBalance()));
 
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,24 +68,24 @@ public class WithdrawActivity extends AppCompatActivity {
         binding.num1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nominal = 500000;
-                inputPin();
+                nominal = 100000;
+                showConfirmBalance();
             }
         });
 
         binding.num2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nominal = 1000000;
-                inputPin();
+                nominal = 200000;
+                showConfirmBalance();
             }
         });
 
         binding.num3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nominal = 1500000;
-                inputPin();
+                nominal = 300000;
+                showConfirmBalance();
 
             }
         });
@@ -88,8 +93,8 @@ public class WithdrawActivity extends AppCompatActivity {
         binding.num4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nominal = 2000000;
-                inputPin();
+                nominal = 400000;
+                showConfirmBalance();
 
             }
         });
@@ -97,133 +102,68 @@ public class WithdrawActivity extends AppCompatActivity {
         binding.num5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String getNominal = binding.nominal.getText().toString().trim();
-                nominal = Long.parseLong(getNominal);
-                inputPin();
+                nominal = 500000;
+                showConfirmBalance();
 
             }
         });
 
-    }
-
-    private void getPin() {
-        FirebaseFirestore
-                .getInstance()
-                .collection("users")
-                .document(user.getUid())
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        pin = "" + documentSnapshot.get("pin");
-                        name= "" + documentSnapshot.get("name");
-                        rekening = "" + documentSnapshot.get("rekening");
-                    }
-                });
-    }
-
-    private void inputPin() {
-        Dialog dialog;
-        Button btnSubmit;
-        EditText etPin;
-        ProgressBar pb;
-
-        dialog = new Dialog(this);
-
-        dialog.setContentView(R.layout.popup_pin);
-        dialog.setCanceledOnTouchOutside(false);
-
-
-        btnSubmit = dialog.findViewById(R.id.submit);
-        etPin = dialog.findViewById(R.id.pin);
-        pb = dialog.findViewById(R.id.progress_bar);
-
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
+        binding.num6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String inputPin = etPin.getText().toString().trim();
+                nominal = 600000;
+                showConfirmBalance();
 
-                /// validasi pin oleh sistem
-                if(inputPin.isEmpty()) {
-                    Toast.makeText(WithdrawActivity.this, "PIN tidak boleh kosong", Toast.LENGTH_SHORT).show();
-                    return;
-                } else if (!inputPin.equals(pin)) {
-                    Toast.makeText(WithdrawActivity.this, "PIN Salah!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                /// proses tarik tunai
-                pb.setVisibility(View.VISIBLE);
-                String transactionId = "INV-" + System.currentTimeMillis();
-
-                SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy, HH:mm:ss", Locale.getDefault());
-                String formattedDate = df.format(new Date());
-
-                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-
-                Map<String, Object> withdraw = new HashMap<>();
-                withdraw.put("transactionId", transactionId);
-                withdraw.put("date", formattedDate);
-                withdraw.put("rekening", rekening);
-                withdraw.put("name", name);
-                withdraw.put("uid", uid);
-                withdraw.put("nominal", nominal);
-
-
-                /// membuat catatan transaksi, supaya riwayat penarikan tunai tersimpan
-                FirebaseFirestore
-                        .getInstance()
-                        .collection("withdraw")
-                        .document(transactionId)
-                        .set(withdraw)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful()) {
-                                    pb.setVisibility(View.GONE);
-                                    dialog.dismiss();
-                                    showSuccessDialog();
-                                } else {
-                                    pb.setVisibility(View.GONE);
-                                    dialog.dismiss();
-                                    showFailureDialog();
-                                }
-                            }
-                        });
             }
         });
 
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
+        binding.num7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nominal = 700000;
+                showConfirmBalance();
+
+            }
+        });
+
+        binding.num8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nominal = 800000;
+                showConfirmBalance();
+
+            }
+        });
+
+        binding.num9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nominal = 900000;
+                showConfirmBalance();
+
+            }
+        });
+
+        binding.num10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nominal = 1000000;
+                showConfirmBalance();
+
+            }
+        });
 
     }
 
-
-    /// munculkan dialog ketika gagal tarik tunai
-    private void showFailureDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("Gagal melakukan tarik tunai")
-                .setMessage("Tampaknya terdapat gangguan pada koneksi internet anda, silahkan coba beberapa saat lagi")
-                .setIcon(R.drawable.ic_baseline_clear_24)
-                .setPositiveButton("OKE", (dialogInterface, i) -> {
-                    dialogInterface.dismiss();
-                })
-                .show();
-    }
-
-    /// munculkan dialog ketika sukses tarik tunai
-    private void showSuccessDialog() {
-        NumberFormat formatter = new DecimalFormat("#,###");
-        new AlertDialog.Builder(this)
-                .setTitle("Berhasil melakukan tarik tunai")
-                .setMessage("Silahkan ambil uang anda sebesar Rp. " + formatter.format(nominal))
-                .setIcon(R.drawable.ic_baseline_check_circle_outline_24)
-                .setPositiveButton("OKE", (dialogInterface, i) -> {
-                    dialogInterface.dismiss();
-                    onBackPressed();
-                })
-                .show();
+    private void showConfirmBalance() {
+        if(nominal <= model.getBalance()) {
+            Intent intent = new Intent(WithdrawActivity.this, WithdrawConfirmationActivity.class);
+            intent.putExtra(WithdrawConfirmationActivity.EXTRA_USER, model);
+            intent.putExtra(WithdrawConfirmationActivity.EXTRA_NOMINAL, nominal);
+            startActivity(intent);
+        } else {
+            Toast.makeText(WithdrawActivity.this, "Mohon maaf, saldo anda tidak mencukupi", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /// HAPUSKAN ACTIVITY KETIKA SUDAH TIDAK DIGUNAKAN, AGAR MENGURANGI RISIKO MEMORY LEAKS

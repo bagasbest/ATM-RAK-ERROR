@@ -17,6 +17,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -64,11 +67,11 @@ public class LoginActivity extends AppCompatActivity {
 
     /// sebelum login, sistem perlu mendeteksi tiap kolom email dan password, dan memastikan kolom tersebut terisi
     private void formValidation() {
-        String email = binding.email.getText().toString().trim();
+        String username = binding.username.getText().toString().trim();
         String password = binding.password.getText().toString().trim();
 
-        if (email.isEmpty()) {
-            Toast.makeText(LoginActivity.this, "Email tidak boleh kosong!", Toast.LENGTH_SHORT).show();
+        if (username.isEmpty()) {
+            Toast.makeText(LoginActivity.this, "Username tidak boleh kosong!", Toast.LENGTH_SHORT).show();
             return;
         }  else if (password.isEmpty()) {
             Toast.makeText(LoginActivity.this, "Kata Sandi tidak boleh kosong!", Toast.LENGTH_SHORT).show();
@@ -78,22 +81,46 @@ public class LoginActivity extends AppCompatActivity {
         /// tampilkan loading bar ketika klik login
         binding.progressBar.setVisibility(View.VISIBLE);
 
-
-        /// fungsi untuk mengecek, apakah email yang di inputkan ketika login sudah terdaftar di database atau belum
-        FirebaseAuth
+        /// mula mula cek dulu username yang dimasukkan user, apakah sudah terdaftar di dalam database collection users atau belum,
+        FirebaseFirestore
                 .getInstance()
-                .signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                .collection("users")
+                .whereEqualTo("username", username)
+                .limit(1)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
-                            /// jika terdapat di database dan email serta password sama, maka masuk ke homepage
-                            binding.progressBar.setVisibility(View.GONE);
-                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                        } else {
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        if(task.getResult().size() == 0) {
                             /// jika tidak terdapat di database dan email serta password, maka tidak bisa login
                             binding.progressBar.setVisibility(View.GONE);
                             showFailureDialog();
+                            return;
+                        }
+
+                        /// jika terdaftar maka ambil email di database, kemudian lakukan autentikasi menggunakan email & password dari user
+                        for(QueryDocumentSnapshot snapshot : task.getResult()) {
+                            String email = "" + snapshot.get("email");
+
+                            /// fungsi untuk mengecek, apakah email yang di inputkan ketika login sudah terdaftar di database atau belum
+                            FirebaseAuth
+                                    .getInstance()
+                                    .signInWithEmailAndPassword(email, password)
+                                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            if(task.isSuccessful()) {
+                                                /// jika terdapat di database dan email serta password sama, maka masuk ke homepage
+                                                binding.progressBar.setVisibility(View.GONE);
+                                                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                            } else {
+                                                /// jika tidak terdapat di database dan email serta password, maka tidak bisa login
+                                                binding.progressBar.setVisibility(View.GONE);
+                                                showFailureDialog();
+                                            }
+                                        }
+                                    });
                         }
                     }
                 });
