@@ -4,7 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/drawable/bg_border.xml" value="0.2526041666666667" />
+        <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/drawable/bg_border2.xml" value="0.24895833333333334" />
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/drawable/bg_rounded.xml" value="0.21481481481481482" />
+        <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/drawable/bg_rounded2.xml" value="0.24895833333333334" />
+        <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/drawable/ic_baseline_check_circle_24.xml" value="0.23333333333333334" />
+        <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/drawable/ic_baseline_payment_24.xml" value="0.24895833333333334" />
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_home.xml" value="0.264" />
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_main.xml" value="0.176" />
@@ -12,7 +16,9 @@
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_transaction.xml" value="0.2" />
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_transaction_detail.xml" value="0.264" />
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_transfer.xml" value="0.264" />
+        <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_transfer_confirmation.xml" value="0.264" />
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_transfer_new_user.xml" value="0.264" />
+        <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_transfer_result.xml" value="0.264" />
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_withdraw.xml" value="0.2" />
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_withdraw_confirmation.xml" value="0.264" />
         <entry key="..\:/TUBES_GALERI/MFAREK/app/src/main/res/layout/activity_withdraw_result.xml" value="0.264" />

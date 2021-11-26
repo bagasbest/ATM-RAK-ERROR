@@ -1,6 +1,7 @@
 package com.application.m_farek.transfer.tambah_daftar_baru;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.m_farek.R;
 import com.application.m_farek.riwayat_transaksi.data.TransactionModel;
+import com.application.m_farek.transfer.TransferConfirmationActivity;
 
 import java.util.ArrayList;
 
@@ -65,7 +67,9 @@ public class NasabahAdapter extends RecyclerView.Adapter<NasabahAdapter.ViewHold
             cv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    Intent intent = new Intent(itemView.getContext(), TransferConfirmationActivity.class);
+                    intent.putExtra(TransferConfirmationActivity.EXTRA_NASABAH, model);
+                    itemView.getContext().startActivity(intent);
                 }
             });
         }

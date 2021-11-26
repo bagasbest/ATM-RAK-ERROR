@@ -102,11 +102,9 @@ public class WithdrawResultActivity extends AppCompatActivity {
         mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.show();
 
-        String transactionId = "INV-" + System.currentTimeMillis();
-
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy, HH:mm:ss", Locale.getDefault());
+        String transactionId = "" + System.currentTimeMillis();
+        SimpleDateFormat df = new SimpleDateFormat("dd MMM yyyy | HH:mm:ss", Locale.getDefault());
         String formattedDate = df.format(new Date());
-
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
@@ -134,9 +132,6 @@ public class WithdrawResultActivity extends AppCompatActivity {
                             /// update balance user
                             Map<String, Object> balance = new HashMap<>();
 
-                            Log.e("YAG", String.valueOf(model.getBalance()));
-                            Log.e("YAG", String.valueOf(getIntent().getLongExtra(EXTRA_NOMINAL,0)));
-                            Log.e("YAG", String.valueOf(model.getBalance() - getIntent().getLongExtra(EXTRA_NOMINAL,0)));
                             balance.put("balance", model.getBalance() - getIntent().getLongExtra(EXTRA_NOMINAL,0));
                             balance.put("pengeluaran", model.getPengeluaran() + getIntent().getLongExtra(EXTRA_NOMINAL,0));
 

@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MFAREK">
         <activity
+            android:name=".transfer.TransferResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".transfer.TransferConfirmationActivity"
+            android:exported="false" />
+        <activity
             android:name=".transfer.tambah_daftar_baru.TransferNewUserActivity"
             android:exported="false" />
         <activity

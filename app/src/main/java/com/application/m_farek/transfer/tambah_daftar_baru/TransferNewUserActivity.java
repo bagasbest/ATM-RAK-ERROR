@@ -62,7 +62,7 @@ public class TransferNewUserActivity extends AppCompatActivity {
 
     private void formValidation() {
         String name = binding.name.getText().toString().trim();
-        String rekening = binding.name.getText().toString().trim();
+        String rekening = binding.rekeningTujuan.getText().toString().trim();
 
         if(rekening.isEmpty()) {
             Toast.makeText(TransferNewUserActivity.this, "Nomor Rekening tidak boleh kosong", Toast.LENGTH_SHORT).show();

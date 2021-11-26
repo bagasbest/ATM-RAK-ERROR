@@ -107,7 +107,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:id="@+id/searchEt"
-                android:background="@drawable/bg_rounded"
+                android:background="@drawable/bg_rounded2"
                 android:drawableStart="@drawable/ic_baseline_search_24"
                 android:drawablePadding="10dp"
                 android:hint="Cari Daftar"

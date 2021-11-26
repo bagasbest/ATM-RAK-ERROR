@@ -36,6 +36,11 @@ public class HomeActivity extends AppCompatActivity {
     private long pengeluaran;
     private final UserModel model = new UserModel();
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getBalance();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +48,6 @@ public class HomeActivity extends AppCompatActivity {
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         showOnboardingImage();
-        getBalance();
 
         /// user klik tombol logout
         binding.logout.setOnClickListener(new View.OnClickListener() {
