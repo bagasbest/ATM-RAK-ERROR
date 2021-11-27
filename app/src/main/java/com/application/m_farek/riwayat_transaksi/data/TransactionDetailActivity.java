@@ -14,6 +14,7 @@ import java.text.NumberFormat;
 
 public class TransactionDetailActivity extends AppCompatActivity {
 
+    //// inisiasi variabel supaya tidak ada error ketika halaman dimuat
     public static final String EXTRA_TRANSACTION = "transaction";
     public static final String EXTRA_OPTION = "option";
     private ActivityTransactionDetailBinding binding;
@@ -25,11 +26,15 @@ public class TransactionDetailActivity extends AppCompatActivity {
         binding = ActivityTransactionDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        /// bagian ini berfungsi untuk meload data dari halaman adapter sebelumnya
         TransactionModel model = getIntent().getParcelableExtra(EXTRA_TRANSACTION);
         String option = getIntent().getStringExtra(EXTRA_OPTION);
+
+        /// ini digunakan untuk membuat money currency, supaya ada titik, contoh 100000 -> Rp.100.000
         NumberFormat formatter = new DecimalFormat("#,###");
 
 
+        /// jika kita membuka halaman tarik tunai, maka akan muncul detail transaksi khusus tarik tunai
         if(option.equals("withdraw")) {
             binding.title.setText("Detail Tarik Tunai");
             binding.name.setText(model.getName());
@@ -38,6 +43,7 @@ public class TransactionDetailActivity extends AppCompatActivity {
             binding.nominal.setText("Rp." + formatter.format(model.getNominal()));
             binding.date.setText(model.getDate());
         } else {
+            /// jika kita membuka transfer, maka akan muncul detail transaksi khusus transfer
             binding.title.setText("Detail Transfer");
             binding.num1.setVisibility(View.VISIBLE);
             binding.num2.setVisibility(View.VISIBLE);
@@ -53,6 +59,7 @@ public class TransactionDetailActivity extends AppCompatActivity {
         }
 
 
+        /// kembali ke halaman sebelumnya
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

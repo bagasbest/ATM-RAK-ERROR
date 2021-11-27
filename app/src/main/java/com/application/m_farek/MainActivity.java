@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        /// menampilkan logo pada halaman splash screen
+        ///program untuk menampilkan logo pada halaman splash screen
         Glide.with(this)
                 .load(R.drawable.logo)
                 .into(binding.logo);
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /// HAPUSKAN ACTIVITY KETIKA SUDAH TIDAK DIGUNAKAN, AGAR MENGURANGI RISIKO MEMORY LEAKS
+    /// FUNGSI UNTUK MENGHAPUS ACTIVITY KETIKA SUDAH TIDAK DIGUNAKAN, AGAR MENGURANGI RISIKO MEMORY LEAKS (KEBOCORAN MEMORI_
     @Override
     protected void onDestroy() {
         super.onDestroy();

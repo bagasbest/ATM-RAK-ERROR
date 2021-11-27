@@ -1,43 +1,20 @@
 package com.application.m_farek.tarik_tunai;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import com.application.m_farek.R;
 import com.application.m_farek.databinding.ActivityWithdrawBinding;
 import com.application.m_farek.homepage.UserModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 public class WithdrawActivity extends AppCompatActivity {
 
 
+    /// inisiasi variabel
     public static final String EXTRA_USER = "users";
     private ActivityWithdrawBinding binding;
     private long nominal;
@@ -50,13 +27,17 @@ public class WithdrawActivity extends AppCompatActivity {
         binding = ActivityWithdrawBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        /// ini merupakan metode untuk mengubah nilai tabungan kita dari 100000000 -> 100.000.000
         NumberFormat formatter = new DecimalFormat("#,###");
 
 
+        /// meload rekening user dan sumber dana user
         model = getIntent().getParcelableExtra(EXTRA_USER);
         binding.rekening.setText("No.Rekening: " + (model.getRekening()));
         binding.balance.setText("Sumber Dana: Rp. " + formatter.format(model.getBalance()));
 
+
+        /// kembali ke halaman sebelumnya
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,6 +46,10 @@ public class WithdrawActivity extends AppCompatActivity {
         });
 
 
+        /// Fungsi fungsi di bawah ini merupakan tombol dari 100.000 hingga 1.000.000
+        /// dimana user dapat menekan salah satu tombol untuk menarik uang
+        /// setiap tombol memiliki angka berbeda
+
         binding.num1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,7 +57,6 @@ public class WithdrawActivity extends AppCompatActivity {
                 showConfirmBalance();
             }
         });
-
         binding.num2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,16 +64,13 @@ public class WithdrawActivity extends AppCompatActivity {
                 showConfirmBalance();
             }
         });
-
         binding.num3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 nominal = 300000;
                 showConfirmBalance();
-
             }
         });
-
         binding.num4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,16 +79,13 @@ public class WithdrawActivity extends AppCompatActivity {
 
             }
         });
-
         binding.num5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 nominal = 500000;
                 showConfirmBalance();
-
             }
         });
-
         binding.num6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,7 +94,6 @@ public class WithdrawActivity extends AppCompatActivity {
 
             }
         });
-
         binding.num7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,7 +102,6 @@ public class WithdrawActivity extends AppCompatActivity {
 
             }
         });
-
         binding.num8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,7 +110,6 @@ public class WithdrawActivity extends AppCompatActivity {
 
             }
         });
-
         binding.num9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -143,7 +118,6 @@ public class WithdrawActivity extends AppCompatActivity {
 
             }
         });
-
         binding.num10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -155,7 +129,9 @@ public class WithdrawActivity extends AppCompatActivity {
 
     }
 
+    /// fungsi ini lebih ke pengecekan, apakah user memiliki dana yang cukup atau tidak untuk menarik uang
     private void showConfirmBalance() {
+        /// jika nominal tidak cukup
         if(nominal <= model.getBalance()) {
             Intent intent = new Intent(WithdrawActivity.this, WithdrawConfirmationActivity.class);
             intent.putExtra(WithdrawConfirmationActivity.EXTRA_USER, model);

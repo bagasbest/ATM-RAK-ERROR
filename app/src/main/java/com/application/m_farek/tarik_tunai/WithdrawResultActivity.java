@@ -35,6 +35,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class WithdrawResultActivity extends AppCompatActivity {
 
+    /// inisiasi variable
     public static final String EXTRA_USER = "user";
     public static final String EXTRA_NOMINAL = "nominal";
     private ActivityWithdrawResultBinding binding;
@@ -47,6 +48,13 @@ public class WithdrawResultActivity extends AppCompatActivity {
         binding = ActivityWithdrawResultBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
+        /// halaman ini berisi hasil tarik tunai yang terdapat juga kode penarikan
+        /// kemudian pengguna bisa menyelesaikannya dengan klik OK
+        /// atau pengguna bisa membatalkan tarik tunai
+
+
+        /// mendapatkan nomor rekening user
         model = getIntent().getParcelableExtra(EXTRA_USER);
         binding.rekening.setText("" + model.getRekening());
 
@@ -59,6 +67,7 @@ public class WithdrawResultActivity extends AppCompatActivity {
         binding.code.setText("" + code);
 
 
+        /// kembali ke halaman sebelumnya
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,6 +76,7 @@ public class WithdrawResultActivity extends AppCompatActivity {
         });
 
 
+        /// batalkan tarik tunai
         binding.cancelWithdraw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,6 +85,7 @@ public class WithdrawResultActivity extends AppCompatActivity {
         });
 
 
+        /// klik OK, atau menyelesaikan tarik tunai
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,6 +93,7 @@ public class WithdrawResultActivity extends AppCompatActivity {
             }
         });
 
+        /// klik copy kode
         binding.copy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,20 +106,24 @@ public class WithdrawResultActivity extends AppCompatActivity {
 
     }
 
+
+    /// fungsi untuk melakukan tarik tunai dan membuat riwayat transaksi
     private void WithdrawMoney(long code) {
         //proses tarik tunai
         ProgressDialog mProgressDialog = new ProgressDialog(this);
-
         mProgressDialog.setMessage("Mohon tunggu hingga proses selesai...");
         mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.show();
 
+
+        /// inisiasi data
         String transactionId = "" + System.currentTimeMillis();
         SimpleDateFormat df = new SimpleDateFormat("dd MMM yyyy | HH:mm:ss", Locale.getDefault());
         String formattedDate = df.format(new Date());
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
+        /// masukkan data kedalam HashMap supaya mudah ketika di masukkan kedalam database
         Map<String, Object> withdraw = new HashMap<>();
         withdraw.put("transactionId", transactionId);
         withdraw.put("date", formattedDate);
@@ -129,12 +145,13 @@ public class WithdrawResultActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
 
-                            /// update balance user
+                            /// update tabungan user setelah tarik tunai
                             Map<String, Object> balance = new HashMap<>();
-
                             balance.put("balance", model.getBalance() - getIntent().getLongExtra(EXTRA_NOMINAL,0));
                             balance.put("pengeluaran", model.getPengeluaran() + getIntent().getLongExtra(EXTRA_NOMINAL,0));
 
+
+                            /// simpan nominal tabungan tersisia setelah tarik tunai
                             FirebaseFirestore
                                     .getInstance()
                                     .collection("users")
@@ -160,6 +177,7 @@ public class WithdrawResultActivity extends AppCompatActivity {
                 });
     }
 
+    /// konfirmasi batal tarik tunai
     private void showConformationDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("Konfirmasi Batal Tarik Tunai")

@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 public class UserModel implements Parcelable {
 
+    /// user model berisi atribut atribut penampung data dari firebase database dari collection users
+
     private String name;
     private String pin;
     private String uid;

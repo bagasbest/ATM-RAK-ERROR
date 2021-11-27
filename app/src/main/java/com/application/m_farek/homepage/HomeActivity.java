@@ -31,14 +31,18 @@ import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
+    /// inisiasi variable supaya aplikasi tidak error ketika dijalankan
     private ActivityHomeBinding binding;
     private long balance;
     private long pengeluaran;
     private final UserModel model = new UserModel();
 
+
+    /// fungsi yang akan bekerja ketika halaman sedang di muat
     @Override
     protected void onResume() {
         super.onResume();
+        /// fungsi untuk memperoleh berapa tabungan user saat ini
         getBalance();
     }
 
@@ -47,6 +51,8 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        /// fungsi untuk menampilkan slide-show image pada halaman utama
         showOnboardingImage();
 
         /// user klik tombol logout
@@ -57,7 +63,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        /// klik sembunyikan nominal
+        /// klik sembunyikan nominal, hide tabungan
         binding.visibleOn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        /// klik tampilkan nominal
+        /// klik tampilkan nominal, show tabungan
         binding.visibleOff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,6 +87,8 @@ public class HomeActivity extends AppCompatActivity {
 
 
         /// user klik menu tarik tunai
+        /// akan di cek dahulu, apakah user sedang terblokir atau tidak,
+        /// jika user terblokir, maka tidak bisa masuk ke halaman tarik tunai
         binding.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,6 +104,8 @@ public class HomeActivity extends AppCompatActivity {
 
 
         /// user klik menu transfer
+        /// akan di cek dahulu, apakah user sedang terblokir atau tidak,
+        /// jika user terblokir, maka tidak bisa masuk ke halaman transfer
         binding.cardView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,7 +117,8 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        /// user klik menu riwayat transaksi
+        /// user klik menu riwayat transaksi,
+        /// masuk ke halaman riwayat transaksi
         binding.cardView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,12 +128,21 @@ public class HomeActivity extends AppCompatActivity {
         
     }
 
+    /// fungsi untuk menampilkan grafik pada halaman utama yang memunculkan pemasukan, pengeluaran dan selisih
     @SuppressLint({"DefaultLocale", "SetTextI18n"})
     private void setGaugeBar() {
-        double valueBpm = (Double.parseDouble(String.valueOf(pengeluaran)) / Double.parseDouble(String.valueOf(balance))) * 100;
 
-        binding.percentage.setText(String.format("%.0f", valueBpm) + " %");
+        /// bagian ini untuk menampilkan persentase 1 - 100% pengeluaran
+        double percentageValue;
+        if(model.getBalance() > model.getPengeluaran()) {
+            percentageValue = (Double.parseDouble(String.valueOf(pengeluaran)) / Double.parseDouble(String.valueOf(balance))) * 100;
+        } else {
+            percentageValue = 100.0;
+        }
+        binding.percentage.setText(String.format("%.0f", percentageValue) + " %");
 
+
+        /// bagian ini untuk memberi warna pada grafik
         Range range = new Range();
         range.setColor(Color.parseColor("#ce0000"));
         range.setFrom(0.0);
@@ -131,19 +151,25 @@ public class HomeActivity extends AppCompatActivity {
         Range range2 = new Range();
         range2.setColor(Color.parseColor("#39A2DB"));
         range2.setFrom(0.0);
-        range2.setTo(valueBpm);
+        range2.setTo(percentageValue);
 
+
+        /// bagian ini untuk memberi batasan persentase pada grafik
+        /// dimana batasannya adalah 0 - 100% pengeluaran
         binding.balanceGauge.addRange(range);
         binding.balanceGauge.addRange(range2);
-        binding.balanceGauge.setValue(valueBpm);
+        binding.balanceGauge.setValue(percentageValue);
         binding.balanceGauge.setValueColor(R.color.background);
         binding.balanceGauge.setMinValue(0.0);
         binding.balanceGauge.setMaxValue(100.0);
     }
 
+
+    ///  fungsi untuk mendapatkan total tabungan dari database user
     private void getBalance() {
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+        /// mula mula sistem akan mendapatkan data user yang sedang login
         FirebaseFirestore
                 .getInstance()
                 .collection("users")
@@ -155,13 +181,15 @@ public class HomeActivity extends AppCompatActivity {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         NumberFormat formatter = new DecimalFormat("#,###");
 
+                        /// dimana data ini memuat: tabungan, pengeluaran, nama pengguna, email, pin, rekening, dsb;
                         balance = documentSnapshot.getLong("balance");
                         pengeluaran = documentSnapshot.getLong("pengeluaran");
-
                         binding.balance.setText("Rp. " + formatter.format(balance));
                         binding.pengeluaran.setText("Rp. " + formatter.format(pengeluaran));
                         binding.selisih.setText("Rp. " + formatter.format(100000000 - pengeluaran));
 
+
+                        /// kemudian masukkan data - data ini kedalam model, supaya data dapat digunakan secara efisien
                         model.setBalance(documentSnapshot.getLong("balance"));
                         model.setName("" + documentSnapshot.get("name"));
                         model.setPengeluaran(documentSnapshot.getLong("pengeluaran"));
@@ -171,7 +199,7 @@ public class HomeActivity extends AppCompatActivity {
                         model.setUsername("" + documentSnapshot.get("username"));
                         model.setUserBlocked(documentSnapshot.getBoolean("isUserBlocked"));
 
-                        /// set grafik pengeluaran
+                        /// setelah mendapatkan data dan memasukkannya kedalam model, selanjutnya merupakan inisiasi fungsi untuk mendapatkan persentase dan grafik pengeluaran
                         setGaugeBar();
                     }
                 });

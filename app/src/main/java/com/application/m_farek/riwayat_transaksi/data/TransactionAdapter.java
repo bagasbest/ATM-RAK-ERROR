@@ -18,9 +18,16 @@ import java.util.ArrayList;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.ViewHolder> {
 
-    private ArrayList<TransactionModel> listTransaction = new ArrayList<>();
+    ///  Apakah Adaptor itu? Adaptor adalah objek dari kelas yang mengimplementasikan Adapter interface.
+    /// Ini bertindak sebagai penghubung antara kumpulan data dan tampilan adaptor, objek dari kelas yang memperluas kelas AdapterView abstrak.
+    /// Data set mampu menyajikan data apa saja secara terstruktur.
 
-    private String option;
+    /// data dari transfer fragment, maupun withdraw fragment akan di hubungkan ke adapter melalui fungsi setData pada baris 35 dibawah
+    /// kemudian adapter ini akan membuat list vertikal yang bisa di scroll data transaksinya
+
+
+    private final ArrayList<TransactionModel> listTransaction = new ArrayList<>();
+    private final String option;
     public TransactionAdapter(String option) {
         this.option = option;
     }

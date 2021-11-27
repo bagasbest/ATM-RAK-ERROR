@@ -3,6 +3,7 @@
     android:layout_width="100dp"
     android:layout_height="wrap_content"
     android:layout_marginEnd="16sp"
+    android:id="@+id/cv"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
@@ -10,6 +11,7 @@
         android:id="@+id/imageView3"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:contentDescription="@string/image"
         android:src="@drawable/ic_baseline_account_circle_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -5,6 +5,9 @@ import android.os.Parcelable;
 
 public class TransactionModel implements Parcelable {
 
+    /// transaction model berisi atribut atribut penampung data dari firebase database collection withdraw dan transfer
+
+
     private String transactionId;
     private String date;
     private String rekening;

@@ -26,6 +26,7 @@ import java.text.NumberFormat;
 public class WithdrawConfirmationActivity extends AppCompatActivity {
 
 
+    /// inisasi variable
     public static final String EXTRA_USER = "users";
     public static final String EXTRA_NOMINAL = "nominal";
     private ActivityWithdrawConfirmationBinding binding;
@@ -38,18 +39,23 @@ public class WithdrawConfirmationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityWithdrawConfirmationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        /// halaman ini berisi halaman konfirmasi
+        /// jika pengguna klik konfirmasi, maka user harus memasukkan pin
+        /// jika pin salah 3x maka akun akan terblokir
+        /// jika pin benar, maka akan lanjut ke halaman hasil penarikan dan konfirmasi final
+
+
+        /// mengisi data user seperti no rekening nominal, total dll
         NumberFormat formatter = new DecimalFormat("#,###");
-
         model = getIntent().getParcelableExtra(EXTRA_USER);
-
-
         binding.rekening.setText("No.Rekening: " + model.getRekening());
         binding.name.setText("Nasabah, " + model.getName());
-
-
         binding.nominal.setText("Rp" + formatter.format(getIntent().getLongExtra(EXTRA_NOMINAL, 0)));
         binding.total.setText("Rp" + formatter.format(getIntent().getLongExtra(EXTRA_NOMINAL, 0)));
 
+
+        /// kembali ke halaman sebelumnya
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,7 +63,7 @@ public class WithdrawConfirmationActivity extends AppCompatActivity {
             }
         });
 
-
+        /// klik konfirmasi, dan inputkan pin
         binding.confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,18 +74,16 @@ public class WithdrawConfirmationActivity extends AppCompatActivity {
 
 
 
-
+    /// jika pengguna klik konfirmasi, maka user harus memasukkan pin
+    /// jika pin salah 3x maka akun akan terblokir
+    /// jika pin benar, maka akan lanjut ke halaman hasil penarikan dan konfirmasi final
     private void inputPin() {
         Dialog dialog;
         Button btnSubmit;
         EditText etPin;
-
         dialog = new Dialog(this);
-
         dialog.setContentView(R.layout.popup_pin);
         dialog.setCanceledOnTouchOutside(false);
-
-
         btnSubmit = dialog.findViewById(R.id.submit);
         etPin = dialog.findViewById(R.id.pin);
 
@@ -101,7 +105,7 @@ public class WithdrawConfirmationActivity extends AppCompatActivity {
                     return;
                 }
 
-                /// ke halaman tarik tunai
+                /// jika pin benar maka akan lanjut ke halaman result tarik tunai
                 Intent intent = new Intent(WithdrawConfirmationActivity.this, WithdrawResultActivity.class);
                 intent.putExtra(WithdrawResultActivity.EXTRA_USER, model);
                 intent.putExtra(WithdrawResultActivity.EXTRA_NOMINAL, getIntent().getLongExtra(EXTRA_NOMINAL, 0));
@@ -110,13 +114,15 @@ public class WithdrawConfirmationActivity extends AppCompatActivity {
 
             }
         });
-
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
 
     }
 
+    /// fungsi untuk memblokir user yang telah 3x salah memasukkan pin
     private void showBlockedUser() {
+
+        /// pertama kita update dulu menjadi true, yang berarti akun sudah terblokir
         FirebaseFirestore
                 .getInstance()
                 .collection("users")
@@ -128,6 +134,7 @@ public class WithdrawConfirmationActivity extends AppCompatActivity {
                         if(task.isSuccessful()) {
 
 
+                            /// selanjutnya munculkan alert dialog, bahwa akun user sudah terblokir
                             new AlertDialog.Builder(WithdrawConfirmationActivity.this)
                                     .setTitle("Rekening Anda Terblokir")
                                     .setMessage("Maaf, rekening anda terblokir karena sudah 3 kali salah menginputkan PIN, silahkan hubungi CS M-FAREK")

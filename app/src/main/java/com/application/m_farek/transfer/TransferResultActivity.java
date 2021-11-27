@@ -17,6 +17,7 @@ import java.text.NumberFormat;
 
 public class TransferResultActivity extends AppCompatActivity {
 
+    /// inisiasi variabel
     public static final String EXTRA_USER = "user";
     public static final String EXTRA_NOMINAL = "nominal";
     public static final String EXTRA_NASABAH = "nasabah";
@@ -33,23 +34,25 @@ public class TransferResultActivity extends AppCompatActivity {
         binding = ActivityTransferResultBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        /// halaman ini merupakan halaman hasil dari transaksi,
+        /// berisi struk transfer yang berhasil
+
+
+        /// sistem akan menginisiasi nama pengirim, nama penerima, rekening pengirim, penerima, dan nominal, dan lain lain (cek desain xml)
         userModel = getIntent().getParcelableExtra(EXTRA_USER);
         nasabahModel = getIntent().getParcelableExtra(EXTRA_NASABAH);
-
         binding.transactionId.setText(getIntent().getStringExtra(TRANSACTION_ID));
         binding.date.setText(getIntent().getStringExtra(DATE));
-
         binding.userName.setText(userModel.getName());
         binding.userRekening.setText("" +userModel.getRekening());
-
         binding.name.setText(nasabahModel.getName());
         binding.rekening.setText(nasabahModel.getRekening());
-
         NumberFormat formatter = new DecimalFormat("#,###");
         binding.nominal.setText("Rp" + formatter.format(Long.parseLong(getIntent().getStringExtra(EXTRA_NOMINAL))));
         binding.total.setText("Rp" + formatter.format(Long.parseLong(getIntent().getStringExtra(EXTRA_NOMINAL))));
 
 
+        /// kembali ke halaman sebelumnya
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,6 +61,7 @@ public class TransferResultActivity extends AppCompatActivity {
         });
 
 
+        /// klik OK untuk menyelesaikan transfer
         binding.finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

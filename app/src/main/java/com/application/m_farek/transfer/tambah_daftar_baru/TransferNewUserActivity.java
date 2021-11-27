@@ -22,6 +22,7 @@ import java.util.Map;
 
 public class TransferNewUserActivity extends AppCompatActivity {
 
+    /// inisiasi variabel
     private ActivityTransferNewUserBinding binding;
     private String bank;
 
@@ -30,6 +31,10 @@ public class TransferNewUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityTransferNewUserBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
+        /// halamn ini berisi 3 kolom inputan kerika user ingin menambahkan daftar transfer baru, supaya selanjutnya pengguna tidak perlu lagi repot repot memasukkan rekening
+
 
         // filter pilihan bank tujuan
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -43,6 +48,7 @@ public class TransferNewUserActivity extends AppCompatActivity {
         });
 
 
+        /// kembali ke halaman sebelumnya
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,6 +57,7 @@ public class TransferNewUserActivity extends AppCompatActivity {
         });
 
 
+        /// simpan daftar transfer baru
         binding.saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,10 +67,13 @@ public class TransferNewUserActivity extends AppCompatActivity {
 
     }
 
+
+    /// fungsi untuk memvalidasi apakah tiap kolom sudah terisi atau belum
     private void formValidation() {
         String name = binding.name.getText().toString().trim();
         String rekening = binding.rekeningTujuan.getText().toString().trim();
 
+        /// validasi nya disini
         if(rekening.isEmpty()) {
             Toast.makeText(TransferNewUserActivity.this, "Nomor Rekening tidak boleh kosong", Toast.LENGTH_SHORT).show();
             return;
@@ -75,16 +85,22 @@ public class TransferNewUserActivity extends AppCompatActivity {
             return;
         }
 
-        binding.progressBar.setVisibility(View.VISIBLE);
 
+        /// jika kolom terisi semua, maka akan muncul progress bar atau loading
+        binding.progressBar.setVisibility(View.VISIBLE);
         String uid = String.valueOf(System.currentTimeMillis());
 
+
+        /// kemudian hashMap ini digunakan untuk menampung data yang dibutuhkan, kemudian menyimpannya di database sebagai nasabah
         Map<String, Object> transferNewUser = new HashMap<>();
         transferNewUser.put("rekening", rekening);
         transferNewUser.put("name", name);
+        transferNewUser.put("nameTemp", name.toLowerCase());
         transferNewUser.put("bank", bank);
         transferNewUser.put("uid", uid);
 
+
+        /// menyimpan data kedalam database, collection nasabah
         FirebaseFirestore
                 .getInstance()
                 .collection("nasabah")

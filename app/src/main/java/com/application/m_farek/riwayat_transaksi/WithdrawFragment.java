@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class WithdrawFragment extends Fragment {
 
+    /// inisiasi variabel
     private FragmentWithdrawBinding binding;
     private TransactionAdapter adapter;
 
@@ -30,18 +31,24 @@ public class WithdrawFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentWithdrawBinding.inflate(inflater, container, false);
+
+        // kedua fungsi ini berfungsi untuk mendapatkan riwayat transaksi dari database kemudian ditampilkan dalam bentuk list
         initRecyclerView();
         initViewModel();
+
+
         return binding.getRoot();
     }
 
     private void initRecyclerView() {
+        /// ini merupakan fungsi untuk membuat list dari data yang diperoleh dari database
         binding.rvWithdraw.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new TransactionAdapter("withdraw");
         binding.rvWithdraw.setAdapter(adapter);
     }
 
     private void initViewModel() {
+        /// ini merupakan fungsi untuk mengambil data riwayar transfer dari database
         TransactionViewModel viewModel = new ViewModelProvider(this).get(TransactionViewModel.class);
 
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();

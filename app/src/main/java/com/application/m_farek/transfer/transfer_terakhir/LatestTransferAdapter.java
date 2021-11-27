@@ -1,4 +1,4 @@
-package com.application.m_farek.transfer.tambah_daftar_baru;
+package com.application.m_farek.transfer.transfer_terakhir;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -12,12 +12,14 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.m_farek.R;
-import com.application.m_farek.riwayat_transaksi.data.TransactionModel;
 import com.application.m_farek.transfer.TransferConfirmationActivity;
+import com.application.m_farek.transfer.tambah_daftar_baru.NasabahAdapter;
+import com.application.m_farek.transfer.tambah_daftar_baru.NasabahModel;
 
 import java.util.ArrayList;
 
-public class NasabahAdapter extends RecyclerView.Adapter<NasabahAdapter.ViewHolder> {
+public class LatestTransferAdapter extends RecyclerView.Adapter<LatestTransferAdapter.ViewHolder> {
+
 
     ///  Apakah Adaptor itu? Adaptor adalah objek dari kelas yang mengimplementasikan Adapter interface.
     /// Ini bertindak sebagai penghubung antara kumpulan data dan tampilan adaptor, objek dari kelas yang memperluas kelas AdapterView abstrak.
@@ -38,13 +40,13 @@ public class NasabahAdapter extends RecyclerView.Adapter<NasabahAdapter.ViewHold
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_transfer, parent, false);
+    public LatestTransferAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_last_transfer, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull LatestTransferAdapter.ViewHolder holder, int position) {
         holder.bind(listNasabah.get(position));
     }
 
@@ -55,9 +57,8 @@ public class NasabahAdapter extends RecyclerView.Adapter<NasabahAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView name;
-        private final TextView bank;
-        private final ConstraintLayout cv;
+        TextView name, bank;
+        ConstraintLayout cv;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,7 +68,6 @@ public class NasabahAdapter extends RecyclerView.Adapter<NasabahAdapter.ViewHold
         }
 
         public void bind(NasabahModel model) {
-
             name.setText(model.getName());
             bank.setText(model.getBank());
 

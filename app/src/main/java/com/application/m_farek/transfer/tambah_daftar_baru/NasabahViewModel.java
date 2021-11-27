@@ -52,6 +52,39 @@ public class NasabahViewModel extends ViewModel {
     }
 
 
+    public void setListNasabahByName(String nameTemp) {
+        nasabahModelArrayList.clear();
+
+        try {
+            FirebaseFirestore
+                    .getInstance()
+                    .collection("nasabah")
+                    .whereGreaterThanOrEqualTo("nameTemp", nameTemp)
+                    .whereLessThanOrEqualTo("nameTemp", nameTemp + '\uf8ff')
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if(task.isSuccessful()) {
+                            for(QueryDocumentSnapshot document : task.getResult()) {
+                                NasabahModel model = new NasabahModel();
+
+                                model.setName("" + document.get("name"));
+                                model.setBank("" + document.get("bank"));
+                                model.setRekening("" + document.get("rekening"));
+                                model.setUid("" + document.get("uid"));
+
+
+                                nasabahModelArrayList.add(model);
+                            }
+                            listNasabah.postValue(nasabahModelArrayList);
+                        } else {
+                            Log.e(TAG, task.toString());
+                        }
+                    });
+        } catch (Exception error) {
+            error.printStackTrace();
+        }
+    }
+
     public LiveData<ArrayList<NasabahModel>> getListNasabah() {
         return listNasabah;
     }

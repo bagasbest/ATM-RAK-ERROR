@@ -70,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         String username = binding.username.getText().toString().trim();
         String password = binding.password.getText().toString().trim();
 
+        /// di halaman login, ada 2 kolom, yaitu username, dan password, sistem harus dapat memvalidasi apakah kolom dalam keadaan kosong atau terisi
         if (username.isEmpty()) {
             Toast.makeText(LoginActivity.this, "Username tidak boleh kosong!", Toast.LENGTH_SHORT).show();
             return;
@@ -78,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        /// tampilkan loading bar ketika klik login
+        /// jika klik login dan kolom inputan tidak kosong, maka tampilkan loading bar ketika klik login
         binding.progressBar.setVisibility(View.VISIBLE);
 
         /// mula mula cek dulu username yang dimasukkan user, apakah sudah terdaftar di dalam database collection users atau belum,

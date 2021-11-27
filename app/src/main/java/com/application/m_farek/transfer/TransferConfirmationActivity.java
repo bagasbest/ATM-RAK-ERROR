@@ -38,6 +38,7 @@ import java.util.Map;
 
 public class TransferConfirmationActivity extends AppCompatActivity {
 
+    /// inisiasi variabel supaya tidak terjadi error
     public static final String EXTRA_NASABAH = "nasabah";
     private ActivityTransferConfirmationBinding binding;
     private NasabahModel model;
@@ -53,14 +54,21 @@ public class TransferConfirmationActivity extends AppCompatActivity {
         binding = ActivityTransferConfirmationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        /// halaman ini merupakan halaman konfirmasi transfer, dimana user memasukkan nominal transfer dan memasukkan pin
+
+
+        /// inisiasi nama tujuan, rekening tujuan, dan bank tujuan
         model = getIntent().getParcelableExtra(EXTRA_NASABAH);
         binding.name.setText(model.getName());
         binding.bank.setText(model.getBank());
         binding.rekeningTujuan.setText(model.getRekening());
 
+
+        /// inisiasi nama pengirim, rekening pengirim
         getUserData();
 
 
+        /// kembali ke halaman sebelumnya
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,6 +77,7 @@ public class TransferConfirmationActivity extends AppCompatActivity {
         });
 
 
+        /// klik tombol transfer dan masukkan pin
         binding.transferBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,27 +86,27 @@ public class TransferConfirmationActivity extends AppCompatActivity {
         });
     }
 
+    /// input pin, maksimal 3 kali
     private void inputPin() {
+        /// inisiasi layout yang tampil
         Dialog dialog;
         Button btnSubmit;
         EditText etPin;
-
         dialog = new Dialog(this);
-
         dialog.setContentView(R.layout.popup_pin);
         dialog.setCanceledOnTouchOutside(false);
-
-
         btnSubmit = dialog.findViewById(R.id.submit);
         etPin = dialog.findViewById(R.id.pin);
 
+        /// user memasukkan pin, kemudian klik submit, setelah itu dilakukan validasi
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String inputPin = etPin.getText().toString().trim();
                 String nominal = binding.nominal.getText().toString().trim();
 
-                /// validasi pin oleh sistem
+                /// validasi pin oleh sistem, harus terisi, maksimal salah 3 kali
+                /// di cek juga apakah user sudah memasukkan saldo atau saldo mencukupi atau tidak
                 if (inputPin.isEmpty()) {
                     Toast.makeText(TransferConfirmationActivity.this, "PIN tidak boleh kosong", Toast.LENGTH_SHORT).show();
                     return;
@@ -111,21 +120,27 @@ public class TransferConfirmationActivity extends AppCompatActivity {
                 } else if (nominal.isEmpty()) {
                     Toast.makeText(TransferConfirmationActivity.this, "Mohon isi nominal terlebih dahulu", Toast.LENGTH_SHORT).show();
                     return;
+                } else if (Long.parseLong(nominal) > userModel.getBalance()) {
+                    Toast.makeText(TransferConfirmationActivity.this, "Maaf, saldo anda tidak mencukupi", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
-                /// proses transfer
-                ProgressDialog mProgressDialog = new ProgressDialog(TransferConfirmationActivity.this);
 
+                /// jika validasi berhasil dilewatim, selanjutnya proses transfer
+                ProgressDialog mProgressDialog = new ProgressDialog(TransferConfirmationActivity.this);
                 mProgressDialog.setMessage("Mohon tunggu hingga proses selesai...");
                 mProgressDialog.setCanceledOnTouchOutside(false);
                 mProgressDialog.show();
 
+                /// menginisiasi id, nominal transfer, tanggal dan waktu
                 transactionId = "" + System.currentTimeMillis();
                 SimpleDateFormat df = new SimpleDateFormat("dd MMM yyyy | HH:mm:ss", Locale.getDefault());
                 date = df.format(new Date());
                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 moneyTransfer = Long.parseLong(nominal);
 
+
+                /// masukkan data - data transaksi kedalam hashmap supaya lebih efisien ketika ingin disimpan ke database
                 Map<String, Object> transfer = new HashMap<>();
                 transfer.put("transactionId", transactionId);
                 transfer.put("date", date);
@@ -139,6 +154,7 @@ public class TransferConfirmationActivity extends AppCompatActivity {
 
 
                 /// membuat catatan transaksi, supaya riwayat penarikan tunai tersimpan
+                /// simpan transfer kedalam database
                 FirebaseFirestore
                         .getInstance()
                         .collection("transfer")
@@ -148,12 +164,13 @@ public class TransferConfirmationActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-                                    /// update balance user
-                                    Map<String, Object> balance = new HashMap<>();
 
+                                    /// update jumlah tabungan setelah dipotong transfer
+                                    Map<String, Object> balance = new HashMap<>();
                                     balance.put("balance", userModel.getBalance() - Long.parseLong(nominal));
                                     balance.put("pengeluaran", userModel.getPengeluaran() + Long.parseLong(nominal));
 
+                                    /// simpan update an kedalam database
                                     FirebaseFirestore
                                             .getInstance()
                                             .collection("users")
@@ -163,6 +180,7 @@ public class TransferConfirmationActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if(task.isSuccessful()) {
+                                                        /// jika sukses, maka akn muncul dialog sukses transfer
                                                         mProgressDialog.dismiss();
                                                         dialog.dismiss();
                                                         showSuccessDialog();
@@ -182,12 +200,13 @@ public class TransferConfirmationActivity extends AppCompatActivity {
                         });
             }
         });
-
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
 
     }
 
+
+    /// fungsi untuk memblokir user yang lebih dari 3 kali salah
     private void showBlockedUser() {
         FirebaseFirestore
                 .getInstance()
@@ -200,6 +219,7 @@ public class TransferConfirmationActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
 
 
+                            /// menampilkan alert dialog rekening anda terblokir
                             new AlertDialog.Builder(TransferConfirmationActivity.this)
                                     .setTitle("Rekening Anda Terblokir")
                                     .setMessage("Maaf, rekening anda terblokir karena sudah 3 kali salah menginputkan PIN, silahkan hubungi CS M-FAREK")
@@ -218,6 +238,7 @@ public class TransferConfirmationActivity extends AppCompatActivity {
                 });
     }
 
+    /// mendapatkan data diri user, untuk ditampilkan pada halaman ini
     private void getUserData() {
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         FirebaseFirestore
@@ -232,6 +253,7 @@ public class TransferConfirmationActivity extends AppCompatActivity {
                         NumberFormat formatter = new DecimalFormat("#,###");
 
 
+                        /// ambil data user yang diperlukan, dan masukkan kedalam model, supaya efisien ketika ingin digunakan
                         userModel = new UserModel();
                         userModel.setBalance(documentSnapshot.getLong("balance"));
                         userModel.setPengeluaran(documentSnapshot.getLong("pengeluaran"));
@@ -241,6 +263,7 @@ public class TransferConfirmationActivity extends AppCompatActivity {
                         userModel.setUid("" + documentSnapshot.get("uid"));
 
 
+                        /// set nomor rekening user dan total tabungan user
                         binding.rekening.setText("No.Rekening: " + userModel.getRekening());
                         binding.balance.setText("Total Tabungan: Rp." + formatter.format(userModel.getBalance()));
 
